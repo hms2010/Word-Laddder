@@ -1,0 +1,7 @@
+#  Ignore files created by build systems 
+*.[oa]
+#  Ignore temp files created by text editors 
+*~
+# Ignore executables
+# For Windows:
+*.exe  
