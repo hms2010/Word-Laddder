@@ -8,3 +8,4 @@
 # Ignore .out, headers
 *.out
 headers
+main
