@@ -4,4 +4,7 @@
 *~
 # Ignore executables
 # For Windows:
-*.exe  
+*.exe 
+# Ignore .out, headers
+*.out
+headers
