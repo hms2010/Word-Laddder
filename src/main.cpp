@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-// #include "WordGraph.h"
+#include "WordGraph.h"
 
 int main(int argc, char** argv){
 	std::string startWord, endWord;

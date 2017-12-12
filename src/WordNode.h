@@ -10,7 +10,7 @@ class WordNode {
 private:
 	uint8_t length;
 	std::string word;
-	std::list<WordNode&> neighbors;
+	std::list<WordNode> neighbors;
 public:
 	WordNode(void) = default;
 	WordNode(std::string _word);
