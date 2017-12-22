@@ -8,6 +8,6 @@ WordGraph::~WordGraph(void) {
 
 }
 
-WordGraph::Buid(std::string _startPointWord, std::string _endPointWord) {
+void WordGraph::Buid(std::string _startPointWord, std::string _endPointWord) {
 
 }
