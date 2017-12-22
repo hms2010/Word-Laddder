@@ -16,6 +16,7 @@ public:
 	WordNode(std::string _word);
 	~WordNode(void);
 	bool operator ==(WordNode& right) const;
+	std::string getWord(void) const;
 };
 
 #endif
