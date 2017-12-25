@@ -3,6 +3,7 @@
 
 #include <string>
 #include <fstream>
+#include <iostream>
 #include <cstdint>
 #include <memory>
 
@@ -17,8 +18,10 @@ private:
 
 public:
 	WordGraph(void) = delete;
-	WordGraph(uint8_t _length, std::fstream dictionary);
-	~WordGraph(void);
+	WordGraph(uint8_t _length, std::ifstream& dictionary);
+	~WordGraph(void) = default;
+
+	void print() const;
 }; 
 
 #endif

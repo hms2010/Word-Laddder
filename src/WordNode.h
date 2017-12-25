@@ -21,7 +21,9 @@ public:
 
 	std::string getWord(void) const;
     uint8_t getDistance(WordNode& wordNode) const;
-    void addNeigbors(const std::list<WordNode>& wordNodes);
-};
+    void addNeighbors(std::list<WordNode>& wordNodes);
+
+	friend std::ostream& operator << (std::ostream& stream, const WordNode& wordNode);
+} ;
 
 #endif

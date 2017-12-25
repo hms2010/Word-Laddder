@@ -1,14 +1,17 @@
 #include "WordGraph.h"
 
-
-WordGraph::~WordGraph(void) {
-
-}
-WordGraph::WordGraph(uint8_t _length, std::fstream dictionary): length(_length), startPoint(nullptr), endPoint(nullptr) {
+WordGraph::WordGraph(uint8_t _length, std::ifstream& dictionary): length(_length), startPoint(nullptr), endPoint(nullptr) {
     // load dict here;
-    // add strings to WordNodes and add it to WordsList
+    // add strings to WordNodes and add it to allWords
+
     for (auto it: allWords) {
-        it.addNeigbors(allWords);
+        it.addNeighbors(allWords);
+    }
+}
+
+void WordGraph::print() const {
+    for (auto it: allWords) {
+        std::cout << it;
     }
 }
 

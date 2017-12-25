@@ -21,10 +21,14 @@ uint8_t WordNode::getDistance(WordNode& wordnode) const {
 	return distance;
 }
 
-void WordNode::addNeigbors(const std::list<WordNode> &wordNodes) {
+void WordNode::addNeighbors(std::list<WordNode>& wordNodes) {
     for (auto it: wordNodes) {
-        if (getDistance(*it) == 1) {
-            neighbors.push_back(it);
+        if (getDistance(it) == 1) {
+            neighbors.push_back(&it);
         }
     }
+}
+
+std::ostream& operator << (std::ostream &stream, const WordNode &wordNode) {
+    return stream << wordNode;
 }
