@@ -1,17 +1,19 @@
 #include <string>
 #include <iostream>
 #include <fstream>
+#include <list>
 #include "WordGraph.h"
 
 int main(int argc, char** argv) {
     std::string startWord, endWord;
     std::string dictionaryName = "../default.dict";
     uint8_t wordsLength = 0;
+    std::list<std::string> path;
 
     if(argc != 3) {
         std::cout << "Number of arguments is not correct; must be 2, but "
 		<< argc - 1 
-		<< " given.\n Usage:woldladder [first word] [second word]\n(lengths of the words is equal)"
+		<< " given.\nUsage: Word_Ladder [first word] [second word]\n(lengths of the words must be equal)"
 		<< std::endl;
         return 1;
     }
@@ -25,9 +27,27 @@ int main(int argc, char** argv) {
         return 2;
     }
 
-    std::ifstream dictionary(dictionaryName);
-    WordGraph graph(wordsLength, dictionary);
-    dictionary.close();
-    graph.print();
+    try {
+        std::ifstream dictionary(dictionaryName);
+        WordGraph graph(wordsLength, dictionary);
+        dictionary.close();
+        graph.print();
+        path = graph.BFS();
+        WordNode a("qwe");
+        std::list<WordNode> l;
+        l.emplace_back("qwa");
+        l.emplace_back("qqe");
+        l.emplace_back("psd");
+        a.addNeighbors(l);
+        std::cout << a;
+    }
+    catch (std::bad_alloc exception){
+        std::cout << exception.what() << std::endl;
+    }
+    catch (...) {
+        std::cout << "Something went wrong. Sorry." << std::endl;
+        return 3;
+    }
+
 	return 0;
 }

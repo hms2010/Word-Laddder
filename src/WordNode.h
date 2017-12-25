@@ -7,6 +7,7 @@
 #include <list>
 #include <memory>
 #include <cstdint>
+#include <iostream>
 
 class WordNode {
 private:

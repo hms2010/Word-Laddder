@@ -21,6 +21,7 @@ public:
 	WordGraph(uint8_t _length, std::ifstream& dictionary);
 	~WordGraph(void) = default;
 
+    std::list<std::string> BFS(void);
 	void print() const;
 }; 
 
