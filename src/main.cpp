@@ -1,11 +1,11 @@
-#include <iostream>
 #include <string>
-#include "WordGraph.h"
+#include <iostream>
 #include <fstream>
+#include "WordGraph.h"
 
 int main(int argc, char** argv) {
     std::string startWord, endWord;
-    std::string dictionaryName = "default.dict";
+    std::string dictionaryName = "../default.dict";
     uint8_t wordsLength = 0;
 
     if(argc != 3) {
@@ -18,15 +18,16 @@ int main(int argc, char** argv) {
 
     startWord = static_cast<std::string>(argv[1]);
     endWord = static_cast<std::string>(argv[2]);
-    if (startWord.length() != endWord.length()) {
+    wordsLength = static_cast<uint8_t >(startWord.length());
+    if (wordsLength != endWord.length()) {
         std::cout << "Lengths of the words must be equal."
                   << std::endl;
         return 2;
     }
-    wordsLength = startWord.length();
+
     std::ifstream dictionary(dictionaryName);
     WordGraph graph(wordsLength, dictionary);
     dictionary.close();
-
+    graph.print();
 	return 0;
 }
