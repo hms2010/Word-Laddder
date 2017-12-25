@@ -14,13 +14,11 @@ private:
 	WordNode* startPoint;
 	WordNode* endPoint;
 	std::list<WordNode> allWords;
-	
 
 public:
 	WordGraph(void) = delete;
+	WordGraph(uint8_t _length, std::fstream dictionary);
 	~WordGraph(void);
-	WordGraph(uint8_t _length);
-	void Build(std::string _startPointWord, std::string _endPointWord);
 }; 
 
 #endif

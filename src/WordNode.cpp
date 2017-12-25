@@ -1,14 +1,14 @@
 #include "WordNode.h"
 
-WordNode::WordNode(std::string _word): word(_word){
-	length = _word.length();
+WordNode::WordNode(std::string _word): word(_word) {
+	length = static_cast<uint8_t >(_word.length());
 }
 
 std::string WordNode::getWord(void) const {
 	return word;
 }
 
-uint8_t WordNode::getDistance(WordNode& wordnode) {
+uint8_t WordNode::getDistance(WordNode& wordnode) const {
 	uint8_t distance = 0;
 	if (length != wordnode.length) {
 		return SIZE_ERROR;
@@ -21,4 +21,10 @@ uint8_t WordNode::getDistance(WordNode& wordnode) {
 	return distance;
 }
 
-WordNode::~WordNode(void) { }
+void WordNode::addNeigbors(const std::list<WordNode> &wordNodes) {
+    for (auto it: wordNodes) {
+        if (getDistance(*it) == 1) {
+            neighbors.push_back(it);
+        }
+    }
+}
