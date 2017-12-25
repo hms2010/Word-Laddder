@@ -1,13 +1,12 @@
 #ifndef WORDNODE
 #define WORDNODE
 
-#define SIZE_ERROR 255
-
 #include <string>
 #include <list>
 #include <memory>
 #include <cstdint>
 #include <iostream>
+#include <exception>
 
 class WordNode {
 private:

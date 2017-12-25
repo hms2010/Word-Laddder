@@ -41,12 +41,11 @@ int main(int argc, char** argv) {
         a.addNeighbors(l);
         std::cout << a;
     }
-    catch (std::bad_alloc exception){
-        std::cout << exception.what() << std::endl;
+    catch (std::length_error& ex) {
+        std::cout << "Invalid argument length: " << ex.what() << std::endl;
     }
-    catch (...) {
+    catch (std::exception& ex) {
         std::cout << "Something went wrong. Sorry." << std::endl;
-        return 3;
     }
 
 	return 0;
