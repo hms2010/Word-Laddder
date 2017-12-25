@@ -19,13 +19,11 @@ uint8_t WordNode::getDistance(WordNode& wordnode) const {
 			distance++;
 		}
 	}
-    std::cout << static_cast<int>(distance);
     return distance;
 }
 
 void WordNode::addNeighbors(std::list<WordNode>& wordNodes) {
-    for (auto it: wordNodes) {
-        std::cout << it << std::endl;
+    for (auto& it: wordNodes) {
         if (getDistance(it) == 1) {
             neighbors.push_back(&it);
         }
@@ -33,10 +31,10 @@ void WordNode::addNeighbors(std::list<WordNode>& wordNodes) {
 }
 
 std::ostream& operator << (std::ostream &stream, const WordNode &wordNode) {
-    stream << wordNode.getWord() << ":\n{";
+    stream << wordNode.getWord() << "{ ";
     if (!wordNode.neighbors.empty()) {
         for (auto it: wordNode.neighbors) {
-            stream << it->getWord() << std::endl;
+            stream << it->getWord() << " ";
         }
     }
     stream << "}" << std::endl;
