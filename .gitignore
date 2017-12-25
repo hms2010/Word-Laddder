@@ -9,3 +9,6 @@
 *.out
 headers
 main
+#CLionFiles
+cmake-build-debug*
+.idea*

@@ -5,20 +5,21 @@
 #include <fstream>
 #include <cstdint>
 #include <memory>
+
 #include "WordNode.h"
-using WordNodePtr = std::unique_ptr<WordNode>;
 
 class WordGraph {
 private:
 	uint8_t length;
-	WordNode& startPoint;
-	WordNode& endPoint;
-	std::list<WordNodePtr> allWords;
+	WordNode* startPoint;
+	WordNode* endPoint;
+	std::list<WordNode> allWords;
 	
 
 public:
-	WordGraph(void) = default;
+	WordGraph(void) = delete;
 	~WordGraph(void);
+	WordGraph(uint8_t _length);
 	void Build(std::string _startPointWord, std::string _endPointWord);
 }; 
 
