@@ -15,7 +15,7 @@ private:
 	std::list<WordNode*> neighbors;
 
 public:
-	WordNode(void) = delete;
+    WordNode(void) = delete;
 	explicit WordNode(std::string _word);
 	~WordNode(void) = default;
 
@@ -23,7 +23,7 @@ public:
     uint8_t getDistance(WordNode& wordNode) const;
     void addNeighbors(std::list<WordNode>& wordNodes);
 
-	friend std::ostream& operator << (std::ostream& stream, const WordNode& wordNode);
+    friend std::ostream& operator << (std::ostream& stream, const WordNode& wordNode);
 } ;
 
 #endif
