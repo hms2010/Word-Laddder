@@ -4,8 +4,32 @@
 import sys
 import getopt
 
-def __main__(argv):
-	pass
+def usage():
+	print("usage: prepare_dict.py -i <input dictionary file name> -o <result file name>")
+
+def main():
+	try:
+		opts, args = getopt.getopt(sys.argv[1:], "ho:v", ["help", "output="])
+	except getopt.GetoptError as err:
+		# print help information and exit:
+		print(err) # will print something like "option -a not recognized"
+		usage()
+		sys.exit(2)
+	input_file = None
+	output_file = None
+	verbose = False
+	for o, a in opts:
+		if o == "-v":
+			verbose = True
+		elif o in ("-h", "--help"):
+			usage()
+			sys.exit()
+		elif o in ("-i", "--input"):
+			input_file = a
+		elif o in ("-o", "--output"):
+			output_file = a
+		else:
+			assert False, "unhandled option"
 	
-if __name__ = "__main__":
-	__main__(sys.argv);
+if __name__ == "__main__":
+	main();
