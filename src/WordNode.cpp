@@ -1,8 +1,7 @@
-
 #include "WordNode.h"
 
 WordNode::WordNode(std::string _word): word(_word) {
-	length = static_cast<uint8_t >(_word.length());
+	length = static_cast<uint8_t>(_word.length());
 }
 
 std::string WordNode::getWord(void) const {
@@ -12,11 +11,10 @@ std::string WordNode::getWord(void) const {
 uint8_t WordNode::getDistance(WordNode& wordNode) const {
 	uint8_t distance = 0;
 	if (length != wordNode.length) {
-        std::length_error ex("\"" + wordNode.word + "\" length doesn't match with \""+ word + "\" length.");
-		throw ex;
+		throw std::length_error("\"" + wordNode.word + "\" length doesn't match with \""+ word + "\" length.");
 	}
 	for (uint8_t i = 0; i < length; i++) {
-		if (static_cast<uint8_t>(word[i]) != static_cast<uint8_t>(wordNode.word[i])) {
+		if (word[i] != wordNode.word[i]) {
 			distance++;
 		}
 	}

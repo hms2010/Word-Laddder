@@ -2,6 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include <list>
+#include <cstdint>
 #include "WordGraph.h"
 
 int main(int argc, char** argv) {
@@ -29,10 +30,10 @@ int main(int argc, char** argv) {
 
 	try {
 		std::ifstream dictionary(dictionaryName);
-		WordGraph graph(wordsLength, dictionary);
+		WordGraph graph(wordsLength, dictionary, "ttt", "aaa");
 		dictionary.close();
 		graph.print();
-		path = graph.BFS();
+//		path = graph.BFS();
 		WordNode a("qwe");
 		std::list<WordNode> l;
 		l.emplace_back("qwa");

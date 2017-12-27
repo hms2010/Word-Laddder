@@ -6,7 +6,8 @@
 #include <iostream>
 #include <cstdint>
 #include <memory>
-
+#include <queue>
+#include <map>
 #include "WordNode.h"
 
 class WordGraph {
@@ -18,10 +19,10 @@ private:
 
 public:
 	WordGraph(void) = delete;
-	WordGraph(uint8_t _length, std::ifstream& dictionary);
+	WordGraph(uint8_t _length, std::ifstream& dictionary, std::string start, std::string end);
 	~WordGraph(void) = default;
 
-    std::list<std::string> BFS(void);
+	std::list<std::string> BFS(void);
 	void print() const;
 }; 
 
