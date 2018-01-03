@@ -69,5 +69,13 @@ std::string dictionary, uint8_t length) {
 
 std::list<std::string> WordGraph::createPath(WordChain wordChain) {
     std::list<std::string> path;
+
+    path.emplace_front(endPoint->getWord());
+    WordNode* key = wordChain[endPoint];
+    while (key != nullptr) {
+        path.emplace_front(key->getWord());
+        key = wordChain[key];
+    }
+    path.emplace_front(startPoint->getWord());
     return std::move(path);
 }
