@@ -1,10 +1,11 @@
 #include "WordGraph.h"
 
-WordGraph::WordGraph(uint8_t _length, std::ifstream& dictionary, std::string start, std::string end): length(_length) {
-	// load dict here;
-	// add strings to WordNodes and add it to allWords
 
 
+WordGraph::WordGraph(uint8_t _length, std::string dictionary, std::string start, std::string end): length(_length) {
+	// loads dict here;
+    loadDictionary(*this, std::move(dictionary), _length);
+    // adds strings to WordNodes and add it to allWords
 	for (auto& it: allWords) {
 		it.addNeighbors(allWords);
         if (it.getWord() == start) {
@@ -23,20 +24,21 @@ void WordGraph::print(void) const {
 }
 
 std::list<std::string> WordGraph::BFS(void) {
-	std::queue<WordNode*> wordsQueue;
-    std::set<std::pair<WordNode*, bool>> visited;
+	std::queue<WordNode&> wordsQueue;
+    std::set<std::pair<WordNode&, bool>> visited;
+    std::pair<WordNode&, >
 
     for (auto& it: allWords) {
         visited.emplace(&it, false);
     }
 
-    wordsQueue.push(startPoint);
+    wordsQueue.push(*startPoint);
 
     while (!wordsQueue.empty()) {
         auto current = wordsQueue.front();
         wordsQueue.pop();
-        if (current == endPoint){
-
+        if (&current == endPoint){
+            printPath(stdout);
         }
 
     }
@@ -44,9 +46,21 @@ std::list<std::string> WordGraph::BFS(void) {
 }
 
 bool WordGraph::isCorrect(void) const {
-    if (startPoint == nullptr || endPoint == nullptr) {
-        return false;
-    }
-    return true;
+    return startPoint == nullptr ? false : endPoint != nullptr;
 }
 
+void loadDictionary(WordGraph& destination,
+                    std::string dictionary, uint8_t length) {
+    std::ifstream source(dictionary + "/" + std::to_string(length));
+    const uint16_t size = 256;
+    char buffer[size];
+    while (!source.eof()){
+        source.getline(buffer, size);
+        destination.allWords.emplace_back(buffer);
+    }
+
+}
+
+void WordGraph::printPath(std::ostream out) {
+    
+}
