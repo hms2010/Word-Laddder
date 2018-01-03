@@ -25,7 +25,7 @@ public:
 	~WordGraph(void) = default;
     bool isCorrect(void) const;
 	std::list<std::string> BFS(void);
-    void printPath(std::ostream out);
+    void printPath(std::ostream out, std::pair<WordNode&, WordNode*> wordChain);
 	void print(void) const;
     friend void loadDictionary(WordGraph& destination,
                                std::string dictionary, uint8_t length);

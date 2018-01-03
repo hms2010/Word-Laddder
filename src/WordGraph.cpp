@@ -26,20 +26,25 @@ void WordGraph::print(void) const {
 std::list<std::string> WordGraph::BFS(void) {
 	std::queue<WordNode&> wordsQueue;
     std::set<std::pair<WordNode&, bool>> visited;
-    std::pair<WordNode&, >
+    // 1st arg - current edge, 2nd arg - it's parent
+    std::pair<WordNode&, WordNode*> currentWord;
 
     for (auto& it: allWords) {
         visited.emplace(&it, false);
     }
 
     wordsQueue.push(*startPoint);
+    WordNode* parent = nullptr;
 
     while (!wordsQueue.empty()) {
         auto current = wordsQueue.front();
         wordsQueue.pop();
         if (&current == endPoint){
-            printPath(stdout);
+            currentWord.first = current;
+            currentWord.second = parent;
+            printPath(stdout, currentWord);
         }
+        parent = &current;
 
     }
     return std::list<std::string>();
@@ -47,7 +52,7 @@ std::list<std::string> WordGraph::BFS(void) {
 
 bool WordGraph::isCorrect(void) const {
     return startPoint == nullptr ? false : endPoint != nullptr;
-}
+}   
 
 void loadDictionary(WordGraph& destination,
                     std::string dictionary, uint8_t length) {
@@ -61,6 +66,6 @@ void loadDictionary(WordGraph& destination,
 
 }
 
-void WordGraph::printPath(std::ostream out) {
-    
+void WordGraph::printPath(std::ostream out, std::pair<WordNode&, WordNode*> wordChain) {
+
 }
