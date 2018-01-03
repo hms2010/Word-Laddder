@@ -22,30 +22,31 @@ void WordGraph::print(void) const {
 }
 
 std::list<std::string> WordGraph::BFS(void) {
-    std::queue<WordNode&> wordsQueue;
-    std::set<std::pair<WordNode&, bool>> visited;
+    std::queue<WordNode*> wordsQueue;
+    std::unordered_map<WordNode*, bool> visited;
     std::list<std::string> path;
     for (auto& it: allWords) {
         visited.emplace(&it, false);
     }
 
-    wordsQueue.push(*startPoint);
+    wordsQueue.push(startPoint);
     WordNode* parent = nullptr;
     WordChain chain;
 
     while (!wordsQueue.empty()) {
         auto current = wordsQueue.front();
+
         wordsQueue.pop();
-        chain.emplace_back(current, *parent);
-        if (&current == endPoint){
+        chain.emplace(current, parent);
+        if (current == endPoint){
             path = createPath(chain);
             break;
         }
 
-        for (auto& it: current.neighbors) {
-            wordsQueue.push(*it);
+        for (auto& it: current->neighbors) {
+            wordsQueue.push(it);
         }
-        parent = &current;
+        parent = current;
     }
     return path;
 }

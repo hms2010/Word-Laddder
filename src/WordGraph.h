@@ -8,11 +8,10 @@
 #include <memory>
 #include <utility>
 #include <queue>
-#include <map>
-#include <set>
+#include <unordered_map>
 #include "WordNode.h"
 // 1st arg - current edge, 2nd - it's parent
-using  WordChain = std::list<std::pair<WordNode&, WordNode&>>;
+using  WordChain = std::unordered_map<WordNode*, WordNode*>;
 
 class WordGraph {
 private:

@@ -29,9 +29,9 @@ int main(int argc, char** argv) {
 	}
 
 	try {
-		std::ifstream dictionary(dictionaryName);
-		WordGraph graph(wordsLength, dictionary, "ttt", "aaa");
-		dictionary.close();
+//		std::ifstream dictionary(dictionaryName);
+		WordGraph graph(wordsLength,dictionaryName, "ttt", "aaa");
+//		dictionary.close();
 		graph.print();
 //		path = graph.BFS();
 		WordNode a("qwe");
