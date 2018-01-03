@@ -44,7 +44,9 @@ std::list<std::string> WordGraph::BFS(void) {
         }
 
         for (auto& it: current->neighbors) {
-            wordsQueue.push(it);
+            if (!visited[it]) {
+                wordsQueue.push(it);
+            }
         }
         parent = current;
     }
