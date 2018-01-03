@@ -15,6 +15,8 @@ private:
 	std::list<WordNode*> neighbors;
 
 public:
+    friend class WordGraph;
+
     WordNode(void) = delete;
 	explicit WordNode(std::string _word);
 	~WordNode(void) = default;

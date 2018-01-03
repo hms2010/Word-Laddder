@@ -11,6 +11,8 @@
 #include <map>
 #include <set>
 #include "WordNode.h"
+// 1st arg - current edge, 2nd - it's parent
+using  WordChain = std::list<std::pair<WordNode&, WordNode&>>;
 
 class WordGraph {
 private:
@@ -25,11 +27,11 @@ public:
 	~WordGraph(void) = default;
     bool isCorrect(void) const;
 	std::list<std::string> BFS(void);
-    void printPath(std::ostream out, std::pair<WordNode&, WordNode*> wordChain);
+    std::list<std::string> createPath(WordChain wordChain);
 	void print(void) const;
     friend void loadDictionary(WordGraph& destination,
                                std::string dictionary, uint8_t length);
 
-}; 
+};
 
 #endif
