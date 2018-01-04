@@ -18,6 +18,7 @@ private:
 	uint8_t length;
 	WordNode* startPoint;
 	WordNode* endPoint;
+    std::list<std::string> path;
 	std::list<WordNode> allWords;
 
 public:
@@ -25,9 +26,14 @@ public:
 	WordGraph(uint8_t _length, std::string dictionary, std::string start, std::string end);
 	~WordGraph() = default;
     bool isCorrect() const;
+
 	std::list<std::string> BFS();
     std::list<std::string> createPath(WordChain wordChain);
-	void print() const;
+
+	void printPath(std::ostream& stream) const;
+    void print(std::ostream& stream) const;
+
+    std::list<std::string> getPath() const;
     friend void loadDictionary(WordGraph& destination,
                                std::string dictionary, uint8_t length);
 

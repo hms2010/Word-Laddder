@@ -2,7 +2,6 @@
 
 WordGraph::WordGraph(uint8_t _length, std::string dictionary, std::string start, std::string end): length(_length) {
     // loads dict here;
-    std::cout << "dict is loading.." << std::endl;
     loadDictionary(*this, std::move(dictionary), _length);
     // adds strings to WordNodes and add it to allWords
     for (auto& it: allWords) {
@@ -14,11 +13,14 @@ WordGraph::WordGraph(uint8_t _length, std::string dictionary, std::string start,
             endPoint = &it;
         }
     }
+    if (!isCorrect()) {
+        throw std::invalid_argument("One of words (or both) isn't found in dictionary. Check your input or change the dictionary");
+    }
 }
 
-void WordGraph::print() const {
+void WordGraph::print(std::ostream& stream) const {
     for (auto& it: allWords) {
-        std::cout << it;
+        stream << it;
     }
 }
 
@@ -62,7 +64,7 @@ bool WordGraph::isCorrect() const {
 void loadDictionary(WordGraph& destination,
 std::string dictionary, uint8_t length) {
     std::string dictPath = dictionary + "/" + std::to_string(length);
-    std::cout << dictPath << std::endl;
+    std::cout << "Selected dictionary: " << dictPath << std::endl;
 
     const uint16_t size = 256;
     char buffer[size];
@@ -71,7 +73,7 @@ std::string dictionary, uint8_t length) {
         std::ifstream source(dictPath);
         while (!source.eof()){
             source.getline(buffer, length + 1);
-            std::cout << buffer << "*" << std::endl;
+            buffer[length + 1] = '\0';
             destination.allWords.emplace_back(buffer);
         }
         source.close();
@@ -79,13 +81,10 @@ std::string dictionary, uint8_t length) {
     catch (std::ifstream::failure& ex){
         std::cout << "Dictionary file processing error." << std::endl;
     }
-
-
-
 }
 
 std::list<std::string> WordGraph::createPath(WordChain wordChain) {
-    std::list<std::string> path;
+
 
     path.emplace_front(endPoint->getWord());
     WordNode* key = wordChain[endPoint];
@@ -93,5 +92,21 @@ std::list<std::string> WordGraph::createPath(WordChain wordChain) {
         path.emplace_front(key->getWord());
         key = wordChain[key];
     }
-    return std::move(path);
+
+    return path;
+}
+
+void WordGraph::printPath(std::ostream& stream) const {
+    stream << "Word Ladder for \"" << startPoint->getWord()
+           << "\" and \"" << endPoint->getWord() << "\":" << std::endl;
+    uint32_t counter = -1;
+    for (auto& it: path) {
+        stream << it << std::endl;
+        counter++;
+    }
+    stream << "Total: " << counter << " changes used." << std::endl;
+}
+
+std::list<std::string> WordGraph::getPath() const {
+    return path;
 }

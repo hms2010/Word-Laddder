@@ -27,14 +27,13 @@ int main(int argc, char** argv) {
 	}
 
 	try {
-		WordGraph graph(wordsLength,dictionaryName, "qwe", "arg");
-        graph.isCorrect();
-		graph.print();
-		path = graph.BFS();
-        for (auto& it: path) {
-            std::cout << it << std::endl;
-        }
+		WordGraph graph(wordsLength,dictionaryName, startWord, endWord);
+        graph.BFS();
+        graph.printPath(std::cout);
 	}
+    catch (std::invalid_argument& ex) {
+        std::cout << ex.what() << std::endl;
+    }
 	catch (std::length_error& ex) {
 		std::cout << "Invalid argument length: " << ex.what() << std::endl;
 	}
