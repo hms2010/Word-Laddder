@@ -1,14 +1,14 @@
-#ifndef WORDGRAPH
-#define WORDGRAPH
+#ifndef WORD_GRAPH
+#define WORD_GRAPH
 
-#include <string>
-#include <fstream>
-#include <iostream>
-#include <cstdint>
-#include <memory>
-#include <utility>
-#include <queue>
 #include <unordered_map>
+#include <queue>
+#include <memory>
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <cstdint>
+#include <utility>
 #include "WordNode.h"
 // 1st arg - current edge, 2nd - it's parent
 using  WordChain = std::unordered_map<WordNode*, WordNode*>;
@@ -21,13 +21,13 @@ private:
 	std::list<WordNode> allWords;
 
 public:
-	WordGraph(void) = delete;
+	WordGraph() = delete;
 	WordGraph(uint8_t _length, std::string dictionary, std::string start, std::string end);
-	~WordGraph(void) = default;
-    bool isCorrect(void) const;
-	std::list<std::string> BFS(void);
+	~WordGraph() = default;
+    bool isCorrect() const;
+	std::list<std::string> BFS();
     std::list<std::string> createPath(WordChain wordChain);
-	void print(void) const;
+	void print() const;
     friend void loadDictionary(WordGraph& destination,
                                std::string dictionary, uint8_t length);
 

@@ -1,5 +1,5 @@
-#ifndef WORDNODE
-#define WORDNODE
+#ifndef WORD_NODE
+#define WORD_NODE
 
 #include <string>
 #include <list>
@@ -17,11 +17,11 @@ private:
 public:
     friend class WordGraph;
 
-    WordNode(void) = delete;
+    WordNode() = delete;
 	explicit WordNode(std::string _word);
-	~WordNode(void) = default;
+	~WordNode() = default;
 
-	std::string getWord(void) const;
+	std::string getWord() const;
     uint8_t getDistance(WordNode& wordNode) const;
     void addNeighbors(std::list<WordNode>& wordNodes);
 

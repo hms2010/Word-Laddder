@@ -1,13 +1,11 @@
 #include <string>
 #include <iostream>
-#include <fstream>
 #include <list>
-#include <cstdint>
 #include "WordGraph.h"
 
 int main(int argc, char** argv) {
 	std::string startWord, endWord;
-	std::string dictionaryName = "../default.dict";
+	std::string dictionaryName = "default";
 	uint8_t wordsLength = 0;
 	std::list<std::string> path;
 
@@ -29,18 +27,13 @@ int main(int argc, char** argv) {
 	}
 
 	try {
-//		std::ifstream dictionary(dictionaryName);
-		WordGraph graph(wordsLength,dictionaryName, "ttt", "aaa");
-//		dictionary.close();
+		WordGraph graph(wordsLength,dictionaryName, "qwe", "arg");
+        graph.isCorrect();
 		graph.print();
-//		path = graph.BFS();
-		WordNode a("qwe");
-		std::list<WordNode> l;
-		l.emplace_back("qwa");
-		l.emplace_back("qqe");
-		l.emplace_back("psd");
-		a.addNeighbors(l);
-		std::cout << a;
+		path = graph.BFS();
+        for (auto& it: path) {
+            std::cout << it << std::endl;
+        }
 	}
 	catch (std::length_error& ex) {
 		std::cout << "Invalid argument length: " << ex.what() << std::endl;
