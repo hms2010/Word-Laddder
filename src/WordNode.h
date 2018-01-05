@@ -10,22 +10,26 @@
 
 class WordNode {
 private:
-	uint8_t length;
-	std::string word;
-	std::list<WordNode*> neighbors;
+    uint8_t length;
+    std::string word;
+    std::list<WordNode *> neighbors;
 
 public:
     friend class WordGraph;
 
     WordNode() = delete;
-	explicit WordNode(std::string _word);
-	~WordNode() = default;
 
-	std::string getWord() const;
-    uint8_t getDistance(WordNode& wordNode) const;
-    void addNeighbors(std::list<WordNode>& wordNodes);
+    explicit WordNode(std::string _word);
 
-    friend std::ostream& operator << (std::ostream& stream, const WordNode& wordNode);
-} ;
+    ~WordNode() = default;
+
+    std::string getWord() const;
+
+    uint8_t getDistance(WordNode &wordNode) const;
+
+    void addNeighbors(std::list<WordNode> &wordNodes);
+
+    friend std::ostream &operator<<(std::ostream &stream, const WordNode &wordNode);
+};
 
 #endif

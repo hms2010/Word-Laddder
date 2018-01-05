@@ -1,10 +1,10 @@
 #include "WordGraph.h"
 
-WordGraph::WordGraph(uint8_t _length, std::string dictionary, std::string start, std::string end): length(_length) {
+WordGraph::WordGraph(uint8_t _length, std::string dictionary, std::string start, std::string end) : length(_length) {
     // loads dict here;
     loadDictionary(*this, std::move(dictionary), _length);
     // adds strings to WordNodes and add it to allWords
-    for (auto& it: allWords) {
+    for (auto &it: allWords) {
         it.addNeighbors(allWords);
         if (it.getWord() == start) {
             startPoint = &it;
@@ -15,21 +15,22 @@ WordGraph::WordGraph(uint8_t _length, std::string dictionary, std::string start,
     }
 
     if (!isCorrect()) {
-        throw std::invalid_argument("One of words (or both) hasn't found in dictionary. Check your input or change the dictionary");
+        throw std::invalid_argument(
+                "One of words (or both) hasn't found in dictionary. Check your input or change the dictionary");
     }
 }
 
-void WordGraph::print(std::ostream& stream) const {
-    for (auto& it: allWords) {
+void WordGraph::print(std::ostream &stream) const {
+    for (auto &it: allWords) {
         stream << it;
     }
 }
 
 std::list<std::string> WordGraph::BFS() {
-    std::queue<WordNode*> wordsQueue;
-    std::unordered_map<WordNode*, bool> visited;
+    std::queue<WordNode *> wordsQueue;
+    std::unordered_map<WordNode *, bool> visited;
     std::list<std::string> path;
-    for (auto& it: allWords) {
+    for (auto &it: allWords) {
         visited.emplace(&it, false);
     }
 
@@ -41,12 +42,12 @@ std::list<std::string> WordGraph::BFS() {
         auto current = wordsQueue.front();
         wordsQueue.pop();
 
-        if (current == endPoint){
+        if (current == endPoint) {
             path = createPath(chain);
             break;
         }
 
-        for (auto& it: current->neighbors) {
+        for (auto &it: current->neighbors) {
             if (!visited[it]) {
                 wordsQueue.push(it);
                 chain.emplace(it, current);
@@ -62,31 +63,31 @@ bool WordGraph::isCorrect() const {
     return startPoint == nullptr ? false : endPoint != nullptr;
 }
 
-void loadDictionary(WordGraph& destination,
-std::string dictionary, uint8_t length) {
+void loadDictionary(WordGraph &destination,
+                    std::string dictionary, uint8_t length) {
     std::string dictPath = dictionary + "/" + std::to_string(length);
     std::cout << "Selected dictionary: " << dictPath << std::endl;
 
     const uint16_t size = 256;
     char buffer[size];
 
-    try{
+    try {
         std::ifstream source(dictPath);
-        while (!source.eof()){
+        while (!source.eof()) {
             source.getline(buffer, length + 1);
             buffer[length + 1] = '\0';
             destination.allWords.emplace_back(buffer);
         }
         source.close();
     }
-    catch (std::ifstream::failure& ex){
+    catch (std::ifstream::failure &ex) {
         std::cout << "Dictionary file processing error." << std::endl;
     }
 }
 
 std::list<std::string> WordGraph::createPath(WordChain wordChain) {
     path.emplace_front(endPoint->getWord());
-    WordNode* key = wordChain[endPoint];
+    WordNode *key = wordChain[endPoint];
     while (key != nullptr) {
         path.emplace_front(key->getWord());
         key = wordChain[key];
@@ -94,11 +95,11 @@ std::list<std::string> WordGraph::createPath(WordChain wordChain) {
     return path;
 }
 
-void WordGraph::printPath(std::ostream& stream) const {
+void WordGraph::printPath(std::ostream &stream) const {
     stream << "Word Ladder for \"" << startPoint->getWord()
            << "\" and \"" << endPoint->getWord() << "\":" << std::endl;
     uint32_t counter = 0;
-    for (auto& it: path) {
+    for (auto &it: path) {
         stream << it << std::endl;
         counter++;
     }
