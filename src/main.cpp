@@ -20,6 +20,7 @@ int main(int argc, char** argv) {
 	startWord = static_cast<std::string>(argv[1]);
 	endWord = static_cast<std::string>(argv[2]);
 	wordsLength = static_cast<uint8_t >(startWord.length());
+
 	if (wordsLength != endWord.length()) {
 		std::cout << "Lengths of the words must be equal."
 				  << std::endl;
@@ -40,6 +41,5 @@ int main(int argc, char** argv) {
 	catch (std::exception& ex) {
 		std::cout << "Something went wrong. Sorry." << std::endl;
 	}
-
 	return 0;
 }

@@ -13,8 +13,9 @@ WordGraph::WordGraph(uint8_t _length, std::string dictionary, std::string start,
             endPoint = &it;
         }
     }
+
     if (!isCorrect()) {
-        throw std::invalid_argument("One of words (or both) isn't found in dictionary. Check your input or change the dictionary");
+        throw std::invalid_argument("One of words (or both) hasn't found in dictionary. Check your input or change the dictionary");
     }
 }
 
@@ -84,27 +85,24 @@ std::string dictionary, uint8_t length) {
 }
 
 std::list<std::string> WordGraph::createPath(WordChain wordChain) {
-
-
     path.emplace_front(endPoint->getWord());
     WordNode* key = wordChain[endPoint];
     while (key != nullptr) {
         path.emplace_front(key->getWord());
         key = wordChain[key];
     }
-
     return path;
 }
 
 void WordGraph::printPath(std::ostream& stream) const {
     stream << "Word Ladder for \"" << startPoint->getWord()
            << "\" and \"" << endPoint->getWord() << "\":" << std::endl;
-    uint32_t counter = -1;
+    uint32_t counter = 0;
     for (auto& it: path) {
         stream << it << std::endl;
         counter++;
     }
-    stream << "Total: " << counter << " changes used." << std::endl;
+    stream << "Total: " << counter - 1 << " changes used." << std::endl;
 }
 
 std::list<std::string> WordGraph::getPath() const {
