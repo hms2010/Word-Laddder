@@ -4,7 +4,7 @@ WordNode::WordNode(std::string _word) : word(_word) {
     length = static_cast<uint8_t>(_word.length());
 }
 
-std::string WordNode::getWord(void) const {
+std::string WordNode::getWord() const {
     return word;
 }
 

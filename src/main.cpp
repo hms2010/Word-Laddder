@@ -3,35 +3,48 @@
 #include <list>
 #include "WordGraph.h"
 
+void usage();
+
 int main(int argc, char **argv) {
     std::list<std::string> path;
+    uint8_t wordsLength = 0;
+
     std::string startWord, endWord;
+
     std::string dictionaryName;
     dictionaryName = "default";
-    uint8_t wordsLength = 0;
-    std::string fileName;
-    if (argc != 3) {
-        std::cout << "Number of arguments is not correct; must be 2, but "
-                  << argc - 1
-                  << " given.\nUsage: Word_Ladder [first word] [second word]\n(lengths of the words must be equal)"
-                  << std::endl;
+
+
+    std::string inputFileName;
+
+    if (argc != 2) {
+        usage();
         return 1;
     }
 
-    startWord = static_cast<std::string>(argv[1]);
-    endWord = static_cast<std::string>(argv[2]);
-    wordsLength = static_cast<uint8_t >(startWord.length());
-
-
+    inputFileName = static_cast<std::string>(argv[1]);
 
     try {
+        std::ifstream inputFile(inputFileName + ".dat");
+        if (!inputFile.is_open()) {
+            usage();
+            return 1;
+        }
+        inputFile >> startWord;
+        inputFile >> endWord;
+        inputFile.close();
+        wordsLength = static_cast<uint8_t >(startWord.length());
+
         WordGraph graph(wordsLength, dictionaryName);
         path = graph.createPath(startWord, endWord);
-        if (path.empty()){
-            std::cout << "Path was not found" << std::endl;
+
+        std::ofstream outputFile(inputFileName + ".ans");
+        if (path.empty()) {
+            outputFile << "Path was not found" << std::endl;
         }
-        for (auto& it: path){
-            std::cout << it << std::endl;
+
+        for (auto &it: path) {
+            outputFile << it << std::endl;
         }
     }
     catch (std::exception &ex) {
@@ -42,4 +55,8 @@ int main(int argc, char **argv) {
     }
 
     return 0;
+}
+
+void usage() {
+    std::cout << "See usage:\nWord-Ladder <filename>\nFilename without .dat extension" << std::endl;
 }

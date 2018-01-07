@@ -15,6 +15,7 @@ void WordGraph::print(std::ostream &stream) const {
     }
 }
 
+// 1st arg - current edge, 2nd - it's parent
 std::unordered_map<WordNode *, WordNode *> WordGraph::BFS(WordNode *startPoint, WordNode *endPoint) {
     std::queue<WordNode *> wordsQueue;
     std::unordered_map<WordNode *, bool> visited;
@@ -65,26 +66,26 @@ void loadDictionary(WordGraph &destination,
             buffer[length + 1] = '\0';
             destination.allWords.emplace_back(buffer);
         }
-            source.close();
+        source.close();
     }
     catch (std::ifstream::failure &ex) {
-        throw  ex;
+        throw ex;
     }
     catch (std::exception &ex) {
-        throw  ex;
+        throw ex;
     }
 
 }
 
 std::list<std::string> WordGraph::createPath(WordNode *startPoint, WordNode *endPoint) {
     std::list<std::string> path;
-    if (startPoint->length != length){
-        throw std::length_error("Invalid argument length \""+ startPoint->getWord() + "\"");
+    if (startPoint->length != length) {
+        throw std::length_error("Invalid argument length \"" + startPoint->getWord() + "\"");
     }
     if (endPoint->length != length) {
-        throw std::length_error("Invalid argument length \""+ endPoint->getWord() + "\"");
+        throw std::length_error("Invalid argument length \"" + endPoint->getWord() + "\"");
     }
-    if (startPoint->length != endPoint->length){
+    if (startPoint->length != endPoint->length) {
         throw std::length_error("Lengths of the words must be equal");
     }
     // 1st arg - current edge, 2nd - it's parent
@@ -98,16 +99,16 @@ std::list<std::string> WordGraph::createPath(WordNode *startPoint, WordNode *end
     return std::move(path);
 }
 
-WordNode *WordGraph::findWord(std::string& word) {
+WordNode *WordGraph::findWord(std::string &word) {
     for (auto &it: allWords) {
         if (it.getWord() == word) {
             return &it;
         }
     }
-    if (word.length() != length){
-        throw std::length_error("Invalid argument length \""+ word + "\"");
+    if (word.length() != length) {
+        throw std::length_error("Invalid argument length \"" + word + "\"");
     }
-    throw std::invalid_argument("\""+ word + "\" was not found in dictionary");
+    throw std::invalid_argument("\"" + word + "\" was not found in dictionary");
 
 }
 

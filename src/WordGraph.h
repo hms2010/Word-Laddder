@@ -26,7 +26,7 @@ public:
 
     std::unordered_map<WordNode *, WordNode *> BFS(WordNode *startPoint, WordNode *endPoint);
 
-    WordNode *findWord(std::string& word);
+    WordNode *findWord(std::string &word);
 
     std::list<std::string> createPath(WordNode *startPoint, WordNode *endPoint);
 
