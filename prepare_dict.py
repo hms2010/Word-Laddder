@@ -6,7 +6,7 @@ import os
 import getopt
 
 def usage():
-	print("usage: prepare_dict.py -i <input dictionary file name> -o <result file name>")
+	print("usage: prepare_dict.py ---input=<input dictionary file name> --output=<result file name>")
 
 def dict_proc(ifname, ofname):
 	fin = open(ifname, 'r')
