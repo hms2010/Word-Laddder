@@ -1,22 +1,11 @@
 #include "WordGraph.h"
 
-WordGraph::WordGraph(uint8_t _length, std::string dictionary, std::string start, std::string end) : length(_length) {
+WordGraph::WordGraph(uint8_t _length, std::string dictionary) : length(_length) {
     // loads dict here;
     loadDictionary(*this, std::move(dictionary), _length);
     // adds strings to WordNodes and add it to allWords
     for (auto &it: allWords) {
         it.addNeighbors(allWords);
-        if (it.getWord() == start) {
-            startPoint = &it;
-        }
-        if (it.getWord() == end) {
-            endPoint = &it;
-        }
-    }
-
-    if (!isCorrect()) {
-        throw std::invalid_argument(
-                "One of words (or both) hasn't found in dictionary. Check your input or change the dictionary");
     }
 }
 
@@ -26,7 +15,7 @@ void WordGraph::print(std::ostream &stream) const {
     }
 }
 
-std::list<std::string> WordGraph::BFS() {
+std::unordered_map<WordNode *, WordNode *> WordGraph::BFS(WordNode *startPoint, WordNode *endPoint) {
     std::queue<WordNode *> wordsQueue;
     std::unordered_map<WordNode *, bool> visited;
     std::list<std::string> path;
@@ -34,7 +23,7 @@ std::list<std::string> WordGraph::BFS() {
         visited.emplace(&it, false);
     }
 
-    WordChain chain;
+    std::unordered_map<WordNode *, WordNode *> chain;
     chain.emplace(startPoint, nullptr);
 
     wordsQueue.push(startPoint);
@@ -43,8 +32,7 @@ std::list<std::string> WordGraph::BFS() {
         wordsQueue.pop();
 
         if (current == endPoint) {
-            path = createPath(chain);
-            break;
+            return chain;
         }
 
         for (auto &it: current->neighbors) {
@@ -56,56 +44,77 @@ std::list<std::string> WordGraph::BFS() {
 
         visited[current] = true;
     }
-    return path;
-}
+    return std::move(chain);
 
-bool WordGraph::isCorrect() const {
-    return startPoint == nullptr ? false : endPoint != nullptr;
 }
 
 void loadDictionary(WordGraph &destination,
                     std::string dictionary, uint8_t length) {
     std::string dictPath = dictionary + "/" + std::to_string(length);
-    std::cout << "Selected dictionary: " << dictPath << std::endl;
 
     const uint16_t size = 256;
     char buffer[size];
 
     try {
         std::ifstream source(dictPath);
+        if (!source.is_open()) {
+            throw std::ifstream::failure("Dictionary wasn't open");
+        };
         while (!source.eof()) {
             source.getline(buffer, length + 1);
             buffer[length + 1] = '\0';
             destination.allWords.emplace_back(buffer);
         }
-        source.close();
+            source.close();
     }
     catch (std::ifstream::failure &ex) {
-        std::cout << "Dictionary file processing error." << std::endl;
+        throw  ex;
     }
+    catch (std::exception &ex) {
+        throw  ex;
+    }
+
 }
 
-std::list<std::string> WordGraph::createPath(WordChain wordChain) {
+std::list<std::string> WordGraph::createPath(WordNode *startPoint, WordNode *endPoint) {
+    std::list<std::string> path;
+    if (startPoint->length != length){
+        throw std::length_error("Invalid argument length \""+ startPoint->getWord() + "\"");
+    }
+    if (endPoint->length != length) {
+        throw std::length_error("Invalid argument length \""+ endPoint->getWord() + "\"");
+    }
+    if (startPoint->length != endPoint->length){
+        throw std::length_error("Lengths of the words must be equal");
+    }
+    // 1st arg - current edge, 2nd - it's parent
+    std::unordered_map<WordNode *, WordNode *> chain = BFS(startPoint, endPoint);
     path.emplace_front(endPoint->getWord());
-    WordNode *key = wordChain[endPoint];
+    WordNode *key = chain[endPoint];
     while (key != nullptr) {
         path.emplace_front(key->getWord());
-        key = wordChain[key];
+        key = chain[key];
     }
-    return path;
+    return std::move(path);
 }
 
-void WordGraph::printPath(std::ostream &stream) const {
-    stream << "Word Ladder for \"" << startPoint->getWord()
-           << "\" and \"" << endPoint->getWord() << "\":" << std::endl;
-    uint32_t counter = 0;
-    for (auto &it: path) {
-        stream << it << std::endl;
-        counter++;
+WordNode *WordGraph::findWord(std::string& word) {
+    for (auto &it: allWords) {
+        if (it.getWord() == word) {
+            return &it;
+        }
     }
-    stream << "Total: " << counter - 1 << " changes used." << std::endl;
+    if (word.length() != length){
+        throw std::length_error("Invalid argument length \""+ word + "\"");
+    }
+    throw std::invalid_argument("\""+ word + "\" was not found in dictionary");
+
 }
 
-std::list<std::string> WordGraph::getPath() const {
-    return path;
+std::list<std::string> WordGraph::createPath(std::string startWord, std::string endWord) {
+    WordNode *startPoint;
+    WordNode *endPoint;
+    startPoint = findWord(startWord);
+    endPoint = findWord(endWord);
+    return std::move(createPath(startPoint, endPoint));
 }

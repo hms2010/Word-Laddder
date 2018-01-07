@@ -4,11 +4,12 @@
 #include "WordGraph.h"
 
 int main(int argc, char **argv) {
-    std::string startWord, endWord;
-    std::string dictionaryName = "default";
-    uint8_t wordsLength = 0;
     std::list<std::string> path;
-
+    std::string startWord, endWord;
+    std::string dictionaryName;
+    dictionaryName = "default";
+    uint8_t wordsLength = 0;
+    std::string fileName;
     if (argc != 3) {
         std::cout << "Number of arguments is not correct; must be 2, but "
                   << argc - 1
@@ -21,25 +22,24 @@ int main(int argc, char **argv) {
     endWord = static_cast<std::string>(argv[2]);
     wordsLength = static_cast<uint8_t >(startWord.length());
 
-    if (wordsLength != endWord.length()) {
-        std::cout << "Lengths of the words must be equal."
-                  << std::endl;
-        return 2;
-    }
+
 
     try {
-        WordGraph graph(wordsLength, dictionaryName, startWord, endWord);
-        graph.BFS();
-        graph.printPath(std::cout);
-    }
-    catch (std::invalid_argument &ex) {
-        std::cout << ex.what() << std::endl;
-    }
-    catch (std::length_error &ex) {
-        std::cout << "Invalid argument length: " << ex.what() << std::endl;
+        WordGraph graph(wordsLength, dictionaryName);
+        path = graph.createPath(startWord, endWord);
+        if (path.empty()){
+            std::cout << "Path was not found" << std::endl;
+        }
+        for (auto& it: path){
+            std::cout << it << std::endl;
+        }
     }
     catch (std::exception &ex) {
-        std::cout << "Something went wrong. Sorry." << std::endl;
+        std::cout << ex.what() << std::endl;
     }
+    catch (...) {
+        std::cout << "Something went wrong. Sorry" << std::endl;
+    }
+
     return 0;
 }
