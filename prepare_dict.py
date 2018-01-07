@@ -1,15 +1,33 @@
-#!/usr/bin/python
-# python 3 ver.
+#!/usr/bin/python3
+# python 3.* ver.
 
 import sys
+import os
 import getopt
 
 def usage():
 	print("usage: prepare_dict.py -i <input dictionary file name> -o <result file name>")
 
+def dict_proc(ifname, ofname):
+	fin = open(ifname, 'r')
+	words = fin.read().split()
+	fin.close()
+	word_dict = dict()
+	for word in words:
+		word_len = len(word)
+		word_dict[word_len] = word_dict.get(word_len, [])
+		word_dict[word_len].append(word)
+
+	os.mkdir("{}".format(ofname))
+	for key in word_dict:
+		fout = open("{}/{}".format(ofname, key), "w")
+		for elem in word_dict[key]:
+			fout.write("{}\n".format(elem))
+		fout.close()
+
 def main():
 	try:
-		opts, args = getopt.getopt(sys.argv[1:], "ho:v", ["help", "output="])
+		opts, args = getopt.getopt(sys.argv[1:], "hio:v", ["help", "input=", "output="])
 	except getopt.GetoptError as err:
 		# print help information and exit:
 		print(err) # will print something like "option -a not recognized"
@@ -30,6 +48,7 @@ def main():
 			output_file = a
 		else:
 			assert False, "unhandled option"
+	dict_proc(input_file, output_file)
 	
 if __name__ == "__main__":
 	main();

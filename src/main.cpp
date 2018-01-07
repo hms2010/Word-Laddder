@@ -31,7 +31,9 @@ int main(int argc, char **argv) {
             return 1;
         }
         inputFile >> startWord;
+        std::cout << startWord << std::endl;
         inputFile >> endWord;
+        std::cout << endWord << std::endl;
         inputFile.close();
         wordsLength = static_cast<uint8_t >(startWord.length());
 

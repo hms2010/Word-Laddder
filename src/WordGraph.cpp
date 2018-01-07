@@ -45,7 +45,7 @@ std::unordered_map<WordNode *, WordNode *> WordGraph::BFS(WordNode *startPoint, 
 
         visited[current] = true;
     }
-    return std::move(chain);
+    return std::unordered_map<WordNode *, WordNode *>();
 
 }
 
@@ -61,10 +61,11 @@ void loadDictionary(WordGraph &destination,
         if (!source.is_open()) {
             throw std::ifstream::failure("Dictionary wasn't open");
         };
+        source.getline(buffer, length + 1);
         while (!source.eof()) {
-            source.getline(buffer, length + 1);
             buffer[length + 1] = '\0';
             destination.allWords.emplace_back(buffer);
+            source.getline(buffer, length + 1);
         }
         source.close();
     }
@@ -88,9 +89,15 @@ std::list<std::string> WordGraph::createPath(WordNode *startPoint, WordNode *end
     if (startPoint->length != endPoint->length) {
         throw std::length_error("Lengths of the words must be equal");
     }
+
+    if (startPoint == endPoint) {
+        path.emplace_front(startPoint->getWord());
+        path.emplace_front(startPoint->getWord());
+        return path;
+    }
     // 1st arg - current edge, 2nd - it's parent
     std::unordered_map<WordNode *, WordNode *> chain = BFS(startPoint, endPoint);
-    path.emplace_front(endPoint->getWord());
+//    path.emplace_front(endPoint->getWord());
     WordNode *key = chain[endPoint];
     while (key != nullptr) {
         path.emplace_front(key->getWord());
