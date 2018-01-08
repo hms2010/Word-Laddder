@@ -12,3 +12,4 @@ main
 #CLionFiles
 cmake-build-debug*
 .idea*
+*.ans
