@@ -16,6 +16,7 @@ def dict_proc(ifname, ofname):
 	for word in words:
 		word_len = len(word)
 		word_dict[word_len] = word_dict.get(word_len, [])
+		word = word.lower()
 		word_dict[word_len].append(word)
 
 	os.mkdir("{}".format(ofname))

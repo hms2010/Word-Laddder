@@ -97,8 +97,11 @@ std::list<std::string> WordGraph::createPath(WordNode *startPoint, WordNode *end
     }
     // 1st arg - current edge, 2nd - it's parent
     std::unordered_map<WordNode *, WordNode *> chain = BFS(startPoint, endPoint);
-    path.emplace_front(endPoint->getWord());
     WordNode *key = chain[endPoint];
+    if (!key) {
+        return path;
+    }
+    path.emplace_front(endPoint->getWord());
     while (key != nullptr) {
         path.emplace_front(key->getWord());
         key = chain[key];
