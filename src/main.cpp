@@ -1,6 +1,7 @@
 #include <string>
 #include <iostream>
 #include <list>
+#include "exitStatusCodes.h"
 #include "WordGraph.h"
 
 void usage();
@@ -19,7 +20,7 @@ int main(int argc, char **argv) {
 
     if (argc != 2) {
         usage();
-        return 1;
+        return INCORRECT_ARGS_NUMBER_STATUS;
     }
 
     inputFileName = static_cast<std::string>(argv[1]);
@@ -29,7 +30,7 @@ int main(int argc, char **argv) {
         if (!inputFile.is_open()) {
             std::cout << "Check if your file exists" << std::endl;
             usage();
-            return 1;
+            return FILE_DOESNT_EXISTS_STATUS;
         }
         inputFile >> startWord;
         inputFile >> endWord;
@@ -50,14 +51,14 @@ int main(int argc, char **argv) {
     }
     catch (std::exception &ex) {
         std::cout << ex.what() << std::endl;
-        return 2;
+        return KNOWN_EXCEPTION_CAUGHT_STATUS;
     }
     catch (...) {
         std::cout << "Something went wrong. Sorry" << std::endl;
-        return 3;
+        return UNKNOWN_EXCEPTION_CAUGHT_STATUS;
     }
 
-    return 0;
+    return CORRECT_EXIT_STATUS;
 }
 
 void usage() {

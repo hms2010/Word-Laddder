@@ -6,7 +6,7 @@ import os
 import getopt
 
 def usage():
-	print("usage: prepare_dict.py ---input=<input dictionary file name> --output=<result file name>")
+	print("usage: python3 prepare_dict.py ---input=<input dictionary file name> --output=<result file name>")
 
 def dict_proc(ifname, ofname):
 	fin = open(ifname, 'r')
@@ -52,4 +52,4 @@ def main():
 	dict_proc(input_file, output_file)
 	
 if __name__ == "__main__":
-	main();
+	main()
