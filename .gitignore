@@ -13,7 +13,7 @@ wordLadder
 *.cmake 
 *CMakeCache.txt
 *CMakeFiles/
-*Makefile8
+*Makefile
 # Ignore CLionFiles
 cmake-build-debug*
 .idea*

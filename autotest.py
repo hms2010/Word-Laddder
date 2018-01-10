@@ -101,7 +101,7 @@ def main():
 
 	if (not options): 
 		options = 3
-	run_tests(options);
+	run_tests(options)
 
 if __name__ == "__main__":
 	main()
