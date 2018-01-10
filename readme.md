@@ -12,6 +12,7 @@
 ```
 Word_Ladder <filename>
 ```
+_<filename\> argument must be without .dat extension. But filename must contains it._
 
 File includes two words splitted by a space or an end-of-line char - start word and end word. It can ends with or without end-of-line.
 ## Examples
