@@ -2,53 +2,77 @@
 
 import getopt
 import subprocess
+import sys
 
+wordLadder = "../cmake-build-debug/wordLadder"
+separator  = 20 * "_"
+block_be   = 20 * "*"
 def usage():
 	print("usage: python3 autotest.py [options: --full|--correct|--incorrect]")
 	print("by default: full cases testing is selected")
-	print("")
+
+def exit_status(message):
+	if message == 0:
+		return "CORRECT_EXIT_STATUS"
+	if message == 1:
+		return "INCORRECT_ARGS_NUMBER_STATUS"
+	if message == 2:
+		return "FILE_DOESNT_EXISTS_STATUS"
+	if message == 3:
+		return "KNOWN_EXCEPTION_CAUGHT_STATUS"
+	if message == 4:
+		return "UNKNOWN_EXCEPTION_CAUGHT_STATUS"
+	return "EXIT_STATUS_CODE_NOT_FOUND"
+
+def run_correct_tests():
+	print("{}\n{}\n{}".format(block_be, "Running correct input tests (./correct)...", block_be))
+	print(separator)
+	path = "correct/test{:d}"
+	cases_num = 3
+
+	# there are 3 cases:
+	# 0 case: both words are correct; but there is no path between it
+	# 1 case: both words are correct; exists path
+	# 2 case: both words are correct and equal; no changes requires
+
+	for index in range(cases_num):
+		message = subprocess.call([wordLadder, path.format(index)])
+		if not message:
+			print("Test {} status: success".format(path.format(index)))
+		else:
+			print("Test {} status: failed".format(path.format(index)))
+			print("Test {} exit code: {}".format(path.format(index), exit_status(message)))
+		print(separator)
+	print("{}\n{}\n{}".format(block_be, "Finished correct input tests (correct).", block_be))
+
+
+def run_incorrect_tests():
+	print("{}\n{}\n{}".format(block_be, "Running incorrect input tests (correct)...", block_be))
+	path = "incorrect/test{:d}"
+	cases_num = 4
+
+	# there are 4 cases:
+	# 0 case: given 1 word, but 2 expected
+	# 1 case: lengths of words are not equal 
+	# 2 case: first word doesn't exist in dictionary, second - exists
+	# 3 case: first word  exists in dictionary, second - doesn't exist
+
+	for index in range(cases_num):
+		message = subprocess.call([wordLadder, path.format(index)])
+		print("Test {} exit code: {}".format(path.format(index), exit_status(message)))
+		print(separator)
+	print("{}\n{}\n{}".format(block_be, "Finished incorrect input tests (incorrect)", block_be))
 
 def run_tests(options):
-	if (options && 1):
-		print("Running correct input tests (./correct)...")
-		path = "./correct/test{:d}.dat"
-		cases_num = 3
-
-'''
-		there are 3 cases:
-		0 case: both words are correct; but there is no path between it
-		1 case: both words are correct; exists path
-		2 case: both words are correct and equal; no changes requires
-'''
-		for index in range(cases_num):
-			if (!subprocess.call(["../wordLadder", path.format(index)])):
-				print("Test {} status: success".format(path.format(index)))
-			else:
-				print("Test {} status: failed".format(path.format(index)))
-		print("Finished correct input tests (./correct).")
-	if (options && 2):
-		rint("Running incorrect input tests (./correct)...")
-		path = "./incorrect/test{:d}.dat"
-		cases_num = 4
-
-'''
-		there are 7 cases:
-		0 case: given 1 word, but 2 expected
-		1 case: lengths of words are not equal 
-		2 case: first word doesn't exist in dictionary, second - exists
-		3 case: first word  exists in dictionary, second - doesn't exist
-'''
-		for index in range(cases_num):
-			if (!subprocess.call(["../wordLadder", path.format(index)])):
-				print("Test {} status: success".format(path.format(index)))
-			else:
-				print("Test {} status: failed".format(path.format(index)))
-		print("Finished incorrect input tests (./correct).")
+	if (options & 1):
+		run_correct_tests()
+	if (options & 2):
+		run_incorrect_tests()
 
 
 def main():
 	try:
-		opts, args = getopt.getopt(sys.argv[1:], "hfci:v", ["help", "full", "correct", "incorrect"])
+		opts, args = getopt.getopt(sys.argv[1:], "hfci:fciv", ["help", "full", "correct", "incorrect"])
 	except getopt.GetoptError as err:
 		# print help information and exit:
 		print(err) # will print something like "option -a not recognized"
@@ -75,9 +99,9 @@ def main():
 		else:
 			assert False, "unhandled option"
 
-	if (!options): 
+	if (not options): 
 		options = 3
-	run_tests();
+	run_tests(options);
 
 if __name__ == "__main__":
 	main()
