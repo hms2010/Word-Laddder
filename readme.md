@@ -10,6 +10,7 @@
 cmake CMakeLists.txt
 make
 ```
+The program is ready to use.
 ## Usage
 
 ```
@@ -19,8 +20,10 @@ _<filename\> argument must be without .dat extension. But filename must contains
 
 File includes two words splitted by a space or an end-of-line char - start word and end word. It can ends with or without end-of-line.
 ## Examples
-on Linux systems: ./Word_Ladder test.dat
-on Windows systems: Words_Ladder test.dat
+See files: example/test.dat, example.ans
+
+on Linux systems: ./wordLadder test
+on Windows systems: wordLadder test
 
 The input file test.dat:
 ```

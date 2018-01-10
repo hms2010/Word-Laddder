@@ -4,12 +4,12 @@ import getopt
 import subprocess
 import sys
 
-wordLadder = "../cmake-build-debug/wordLadder"
+wordLadder = "./wordLadder"
 separator  = 20 * "_"
 block_be   = 20 * "*"
 def usage():
 	print("usage: python3 autotest.py [options: --full|--correct|--incorrect]")
-	print("by default: full cases testing is selected")
+	print("by default: --full cases testing is selected")
 
 def exit_status(message):
 	if message == 0:
@@ -27,7 +27,7 @@ def exit_status(message):
 def run_correct_tests():
 	print("{}\n{}\n{}".format(block_be, "Running correct input tests (./correct)...", block_be))
 	print(separator)
-	path = "correct/test{:d}"
+	path = "tests/correct/test{:d}"
 	cases_num = 3
 
 	# there are 3 cases:
@@ -48,7 +48,7 @@ def run_correct_tests():
 
 def run_incorrect_tests():
 	print("{}\n{}\n{}".format(block_be, "Running incorrect input tests (correct)...", block_be))
-	path = "incorrect/test{:d}"
+	path = "tests/incorrect/test{:d}"
 	cases_num = 4
 
 	# there are 4 cases:

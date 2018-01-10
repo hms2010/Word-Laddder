@@ -1,15 +1,22 @@
+# Ignore executable
+wordLadder
 #  Ignore files created by build systems 
 *.[oa]
 #  Ignore temp files created by text editors 
 *~
-# Ignore executables
-# For Windows:
+#  Ignore executables
+#  For Windows:
 *.exe 
-# Ignore .out, headers
+#  Ignore .out
 *.out
-headers
-main
-#CLionFiles
+# Ignore CMake generated files
+*.cmake 
+*CMakeCache.txt
+*CMakeFiles/
+*Makefile8
+# Ignore CLionFiles
 cmake-build-debug*
 .idea*
+# Ignore answer files
 *.ans
+
