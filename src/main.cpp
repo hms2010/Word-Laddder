@@ -25,8 +25,9 @@ int main(int argc, char **argv) {
     inputFileName = static_cast<std::string>(argv[1]);
 
     try {
-        std::ifstream inputFile(inputFileName + ".dat");
+        std::ifstream inputFile(inputFileName);
         if (!inputFile.is_open()) {
+            std::cout << "Check if your file exists" << std::endl;
             usage();
             return 1;
         }
@@ -49,14 +50,16 @@ int main(int argc, char **argv) {
     }
     catch (std::exception &ex) {
         std::cout << ex.what() << std::endl;
+        return 2;
     }
     catch (...) {
         std::cout << "Something went wrong. Sorry" << std::endl;
+        return 3;
     }
 
     return 0;
 }
 
 void usage() {
-    std::cout << "See usage:\nWord-Ladder <filename>\nFilename without .dat extension" << std::endl;
+    std::cout << "See usage:\nWord-Ladder <filename>" << std::endl;
 }
