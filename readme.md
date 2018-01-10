@@ -6,7 +6,10 @@
 
 * СMake 3.0 and above version
 ## To install
-
+``` 
+cmake CMakeLists.txt
+make
+```
 ## Usage
 
 ```

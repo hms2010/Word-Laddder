@@ -15,7 +15,6 @@ int main(int argc, char **argv) {
     std::string dictionaryName;
     dictionaryName = "default";
 
-
     std::string inputFileName;
 
     if (argc != 2) {
