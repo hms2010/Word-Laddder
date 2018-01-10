@@ -4,7 +4,7 @@
 
 * Python 3 interpreter
 
-* СMake 3.9 and above version
+* СMake 3.0 and above version
 ## To install
 
 ## Usage
