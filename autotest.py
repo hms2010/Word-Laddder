@@ -25,7 +25,7 @@ def exit_status(message):
 	return "EXIT_STATUS_CODE_NOT_FOUND"
 
 def run_correct_tests():
-	print("{}\n{}\n{}".format(block_be, "Running correct input tests (./correct)...", block_be))
+	print("{}\n{}\n{}".format(block_be, "Running correct input tests (correct)...", block_be))
 	print(separator)
 	path = "tests/correct/test{:d}"
 	cases_num = 3
@@ -47,7 +47,7 @@ def run_correct_tests():
 
 
 def run_incorrect_tests():
-	print("{}\n{}\n{}".format(block_be, "Running incorrect input tests (correct)...", block_be))
+	print("{}\n{}\n{}".format(block_be, "Running incorrect input tests (incorrect)...", block_be))
 	path = "tests/incorrect/test{:d}"
 	cases_num = 4
 
