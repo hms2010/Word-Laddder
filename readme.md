@@ -31,7 +31,7 @@ _<filename\> argument must be without .dat extension. But filename must contains
 
 File includes two words splitted by a space or an end-of-line char - start word and end word. It can ends with or without end-of-line.
 ### Examples
-See files: example/test.dat, example.ans
+See files: run wordLadder with example/test.dat and see example/test.ans.
 
 on Linux systems: ./wordLadder test
 on Windows systems: wordLadder test
@@ -58,7 +58,7 @@ You can use autotest.py to run the tests.
 
 Usage:
 ```commandline
-python3 autotest.py [options: --full|--correct|--incorrect]"
+python3 autotest.py [options: --full|--correct|--incorrect]
 ```
 Options:
 * -h, --help - prints usage
