@@ -41,7 +41,7 @@ std::unordered_map<WordNode *, WordNode *> WordGraph::BFS(WordNode *startPoint, 
             if (!visited[it]) {
                 wordsQueue.push(it);
                 chain.emplace(it, current);
-                visited[current] = true;
+                visited[it] = true;
             }
         }
 
